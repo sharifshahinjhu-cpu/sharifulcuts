@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-ink-950 text-ink-100 font-sans antialiased;
+  }
+  h1, h2, h3, h4, h5 {
+    font-family: '"Poppins"', sans-serif;
+  }
+  ::selection {
+    @apply bg-brand-500/30 text-white;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply max-w-7xl mx-auto px-6 sm:px-8 lg:px-10;
+  }
+
+  .section-pad {
+    @apply py-20 sm:py-28;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase text-brand-400;
+  }
+
+  .card {
+    @apply bg-ink-900 border border-ink-700/70 rounded-2xl;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950;
+  }
+  .btn-primary {
+    @apply btn bg-brand-500 text-ink-950 hover:bg-brand-400 hover:shadow-glow focus-visible:ring-brand-400;
+  }
+  .btn-outline {
+    @apply btn border border-ink-600 text-ink-100 hover:border-brand-400 hover:text-brand-300 focus-visible:ring-brand-400;
+  }
+  .btn-crimson {
+    @apply btn bg-crimson-500 text-white hover:bg-crimson-400 hover:shadow-glow-red focus-visible:ring-crimson-400;
+  }
+  .btn-crimson-outline {
+    @apply btn border border-crimson-600 text-crimson-200 hover:bg-crimson-950/60 hover:border-crimson-400 focus-visible:ring-crimson-400;
+  }
+  .btn-gold {
+    @apply btn bg-gold-500 text-ink-950 hover:bg-gold-400 hover:shadow-glow-gold focus-visible:ring-gold-400;
+  }
+  .btn-gold-outline {
+    @apply btn border border-gold-600 text-gold-200 hover:bg-gold-950/60 hover:border-gold-400 focus-visible:ring-gold-400;
+  }
+
+  .nav-link {
+    @apply text-sm font-medium text-ink-300 hover:text-white transition-colors duration-150;
+  }
+  .nav-link-active {
+    @apply text-sm font-medium text-brand-400;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-ink-700 bg-ink-900/80 px-3 py-1 text-xs font-medium text-ink-300;
+  }
+
+  .stat-tile {
+    @apply card p-6 text-center;
+  }
+
+  .fade-up {
+    animation: fadeUp 0.7s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
