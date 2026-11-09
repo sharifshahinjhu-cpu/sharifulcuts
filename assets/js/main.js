@@ -22,6 +22,15 @@
   var y = document.getElementById("year");
   if (y) y.textContent = new Date().getFullYear();
 
+  // Copy-email buttons (clipboard may be refused; the mailto link still works)
+  document.querySelectorAll(".copy-btn").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var t = b.getAttribute("data-copy") || "";
+      var done = function () { b.textContent = "Copied"; setTimeout(function () { b.textContent = "Copy"; }, 1800); };
+      try { navigator.clipboard.writeText(t).then(done, function () {}); } catch (e) {}
+    });
+  });
+
   // Sample videos: click-to-load. Nothing is requested from YouTube until the viewer presses play.
   function embedUrl(id) {
     var p = ["autoplay=1", "controls=1", "playsinline=1", "rel=0", "modestbranding=1"];
