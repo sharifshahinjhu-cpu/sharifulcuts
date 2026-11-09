@@ -2,3 +2,10 @@ User-agent: *
 Allow: /
 
 Sitemap: https://sharifulcuts.com/sitemap.xml
+
+# AI search engines are allowed so answers can cite the site
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /

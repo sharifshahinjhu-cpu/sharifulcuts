@@ -1,107 +1,48 @@
-// Md. Shariful Islam — shared site behavior (mobile nav, back-to-top, footer year, contact form)
+// Md. Shariful Islam — site behaviour: mobile menu, sample autoplay, footer year.
 (function () {
   "use strict";
 
-  // Mobile nav toggle
-  var toggle = document.getElementById("menu-toggle");
+  // Mobile menu
+  var btn = document.getElementById("menu-btn");
   var menu = document.getElementById("mobile-menu");
-  var iconOpen = document.getElementById("menu-icon-open");
-  var iconClose = document.getElementById("menu-icon-close");
-
-  if (toggle && menu) {
-    toggle.addEventListener("click", function () {
-      var isHidden = menu.classList.contains("hidden");
-      menu.classList.toggle("hidden");
-      toggle.setAttribute("aria-expanded", isHidden ? "true" : "false");
-      if (iconOpen && iconClose) {
-        iconOpen.classList.toggle("hidden");
-        iconClose.classList.toggle("hidden");
-      }
+  if (btn && menu) {
+    btn.addEventListener("click", function () {
+      var open = menu.classList.toggle("open");
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
     });
-
-    // Close mobile menu when a link inside it is clicked
-    menu.querySelectorAll("a").forEach(function (link) {
-      link.addEventListener("click", function () {
-        menu.classList.add("hidden");
-        toggle.setAttribute("aria-expanded", "false");
-        if (iconOpen && iconClose) {
-          iconOpen.classList.remove("hidden");
-          iconClose.classList.add("hidden");
-        }
+    menu.querySelectorAll("a").forEach(function (a) {
+      a.addEventListener("click", function () {
+        menu.classList.remove("open");
+        btn.setAttribute("aria-expanded", "false");
       });
     });
   }
 
-  // Back to top
-  var backToTop = document.getElementById("back-to-top");
-  if (backToTop) {
-    backToTop.addEventListener("click", function () {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-  }
-
   // Footer year
-  var yearEl = document.getElementById("year");
-  if (yearEl) {
-    yearEl.textContent = new Date().getFullYear();
+  var y = document.getElementById("year");
+  if (y) y.textContent = new Date().getFullYear();
+
+  // Sample videos: click-to-load. Nothing is requested from YouTube until the viewer presses play.
+  function embedUrl(id) {
+    var p = ["autoplay=1", "controls=1", "playsinline=1", "rel=0", "modestbranding=1"];
+    return "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(id) + "?" + p.join("&");
   }
 
-  // Pre-fill contact form when arriving from a shop.html "package"/"product" link
-  var interestField = document.getElementById("interest");
-  var messageField = document.getElementById("message");
-  if (interestField && messageField) {
-    var params = new URLSearchParams(window.location.search);
-    var slug = params.get("package") || params.get("product");
-    if (slug) {
-      var labels = {
-        "starter-cut": "Starter Cut package",
-        "agency-partnership": "Agency Partnership package",
-        "cinematic-color-lut-pack": "Cinematic Color LUT Pack",
-        "multilingual-motivational-script-pack": "Multilingual Motivational Script Pack",
-        "reflection-music-vol.-1": "Reflection Music Vol. 1"
-      };
-      var label = labels[slug] || slug.replace(/-/g, " ");
-
-      for (var i = 0; i < interestField.options.length; i++) {
-        if (interestField.options[i].text.indexOf("Shop") === 0) {
-          interestField.selectedIndex = i;
-          break;
-        }
-      }
-      if (!messageField.value.trim()) {
-        messageField.value = "I'm interested in: " + label + "\n\n";
-      }
-    }
+  function mount(box) {
+    if (box.querySelector("iframe")) return;
+    var f = document.createElement("iframe");
+    f.src = embedUrl(box.getAttribute("data-yt"));
+    f.title = box.getAttribute("data-title") || "Sample video";
+    f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+    f.allowFullscreen = true;
+    f.referrerPolicy = "strict-origin-when-cross-origin";
+    box.appendChild(f);
+    var poster = box.querySelector(".poster");
+    if (poster) poster.style.display = "none";
   }
 
-  // Contact form -> mailto (no backend required)
-  var form = document.getElementById("contact-form");
-  if (form) {
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var name = form.querySelector("#name").value.trim();
-      var email = form.querySelector("#email").value.trim();
-      var interest = form.querySelector("#interest").value;
-      var message = form.querySelector("#message").value.trim();
-
-      var subject = "New inquiry: " + interest;
-      var body =
-        "Name: " + name + "\n" +
-        "Email: " + email + "\n" +
-        "Interest: " + interest + "\n\n" +
-        message;
-
-      var mailto =
-        "mailto:sharifshahin.jhu@gmail.com" +
-        "?subject=" + encodeURIComponent(subject) +
-        "&body=" + encodeURIComponent(body);
-
-      window.location.href = mailto;
-
-      var fallback = document.getElementById("contact-fallback");
-      if (fallback) {
-        fallback.classList.remove("hidden");
-      }
-    });
-  }
+  document.querySelectorAll(".sample[data-yt]").forEach(function (box) {
+    var b = box.querySelector(".play");
+    if (b) b.addEventListener("click", function () { mount(box); });
+  });
 })();

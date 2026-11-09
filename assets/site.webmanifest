@@ -1,11 +1,11 @@
 {
   "name": "Md. Shariful Islam",
   "short_name": "Shariful Islam",
-  "description": "Video editor, founder of GoVidCo, and creator of Shariful Reflection.",
+  "description": "Short-form video editing: Authority Shorts and Ad Creative Sprint.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#07090a",
-  "theme_color": "#07090a",
+  "background_color": "#0d0e10",
+  "theme_color": "#0d0e10",
   "icons": [
     {
       "src": "img/mark-192.png",
