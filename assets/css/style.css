@@ -273,3 +273,4 @@ details .ans p:last-child{margin-bottom:0}
 .ba-pair>div:last-child span{background:var(--accent);color:var(--btn-ink)}
 .ba figcaption{font-size:.9rem;color:var(--muted);margin-top:10px}
 .ba figcaption strong{display:block;color:var(--text)}
+.hero-photo picture{display:block}
